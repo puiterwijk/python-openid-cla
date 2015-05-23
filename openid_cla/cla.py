@@ -2,16 +2,12 @@
 @var cla_uri: The URI used for the CLA extension namespace and XRD Type Value
 """
 
-from openid.message import registerNamespaceAlias, \
+from openid.message import registerNamespaceAlias \
     NamespaceAliasRegistrationError
 from openid.extension import Extension
 import logging
 
-try:
-    basestring  # pylint:disable-msg=W0104
-except NameError:
-    # For Python 2.2
-    basestring = (str, unicode)  # pylint:disable-msg=W0622
+import six
 
 __all__ = [
     'CLARequest',
@@ -36,7 +32,7 @@ CLA_URI_FEDORA_REDHAT = 'http://admin.fedoraproject.org/accounts/cla/redhat'
 
 try:
     registerNamespaceAlias(cla_uri, 'cla')
-except NamespaceAliasRegistrationError, e:
+except NamespaceAliasRegistrationError as e:
     logging.exception('registerNamespaceAlias(%r, %r) failed: %s' % (
         cla_uri, 'cla', str(e),))
 
@@ -90,7 +86,7 @@ class CLARequest(Extension):
             self.requested.append(cla_uri)
 
     def requestCLAs(self, cla_uris):
-        if isinstance(cla_uris, basestring):
+        if isinstance(cla_uris, six.string_types):
             raise TypeError('CLA URIs should be passed as a list of '
                             'strings (not %r)' % (type(field_names),))
 
