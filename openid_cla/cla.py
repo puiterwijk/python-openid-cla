@@ -2,8 +2,10 @@
 @var cla_uri: The URI used for the CLA extension namespace and XRD Type Value
 """
 
-from openid.message import registerNamespaceAlias \
-    NamespaceAliasRegistrationError
+from openid.message import (
+    registerNamespaceAlias,
+    NamespaceAliasRegistrationError,
+)
 from openid.extension import Extension
 import logging
 
